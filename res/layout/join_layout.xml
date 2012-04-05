@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/join_title"
+   		android:tag="@string/bold"
+        />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/join_name_label"
+        android:tag="@string/bold"
+        />
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_name"
+   		android:id="@+id/join_name"           
+        />  
+    
+    <!-- 비밀번호 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/join_pwd_label"
+        android:tag="@string/bold"
+        />
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_pwd"
+        android:id="@+id/join_pwd" 
+        />  
+    
+    
+     <!-- 비밀번호 확인 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/join_re_pwd_label"
+        android:tag="@string/bold"
+        />
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_re_pwd"
+        android:id="@+id/join_re_pwd" 
+        />  
+        
+    
+    <!-- 사진 보기 -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/avata_image"
+        />    
+    
+    <!-- 사진 등록 -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/join_pic_label"
+        android:id="@+id/pic_reg_btn"
+        />
+    
+    
+    <!-- 등록 -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/register_btn"
+        android:id="@+id/register_btn"
+        />    
+
+</LinearLayout>

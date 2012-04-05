@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="attach">
+		<item>사진촬영</item>
+		<item>사진선택</item>						
+	</string-array>
+</resources>
