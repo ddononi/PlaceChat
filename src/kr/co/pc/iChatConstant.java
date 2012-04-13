@@ -20,6 +20,7 @@ public interface iChatConstant {
     public static final int MAX_FILE_NAME_LENGTH = 100;			// 최대 파일 이름
     public static final int MAX_FILE_SIZE = 5242880;			// 최대 사진 파일 전송 사이즈 5 Mb
     public static final String UPLOAD_URL = "/placeChat/insert.php";	// 유저 등록 url
+    public static final String LOGIN_URL = "/placeChat/login.php";		// 로그인 등록 url
 
 
 	// 메뉴
@@ -30,5 +31,8 @@ public interface iChatConstant {
 	public static final int OK = 1;
     public static final int ACTION_RESULT = 0;
 
+    /* map setting */
+    public final static String DAUM_MMAPS_ANDROID_APIKEY = "9849a71475154c6a7a7e42778072ee226e741c9b";	// 다음 키 설정
+    public final static int API_RESULT_OK = 200;	// 다음 api 키 인증 성공값
 
 }

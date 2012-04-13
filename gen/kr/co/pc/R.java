@@ -14,15 +14,26 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int add_photo=0x7f020000;
+        public static final int addphoto_n=0x7f020001;
+        public static final int addphoto_p=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int input_n=0x7f020004;
+        public static final int input_p=0x7f020005;
+        public static final int input_s=0x7f020006;
+        public static final int txt_input=0x7f020007;
     }
     public static final class id {
-        public static final int avata_image=0x7f060003;
-        public static final int join_name=0x7f060000;
-        public static final int join_pwd=0x7f060001;
-        public static final int join_re_pwd=0x7f060002;
-        public static final int pic_reg_btn=0x7f060004;
-        public static final int register_btn=0x7f060005;
+        public static final int avata_image=0x7f070000;
+        public static final int join_name=0x7f070002;
+        public static final int join_pwd=0x7f070003;
+        public static final int join_re_pwd=0x7f070004;
+        public static final int login_btn=0x7f070008;
+        public static final int map_root=0x7f070009;
+        public static final int pic_reg_btn=0x7f070001;
+        public static final int register_btn=0x7f070005;
+        public static final int user_id=0x7f070006;
+        public static final int user_pwd=0x7f070007;
     }
     public static final class layout {
         public static final int join_layout=0x7f030000;
@@ -51,5 +62,13 @@ public final class R {
          */
         public static final int login_title=0x7f05000c;
         public static final int register_btn=0x7f05000b;
+    }
+    public static final class style {
+        /**   input 
+         */
+        public static final int input=0x7f060001;
+        /**   Label 
+         */
+        public static final int label=0x7f060000;
     }
 }

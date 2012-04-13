@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f8f8f8"    
     android:orientation="vertical" >
     
     <TextView
@@ -10,42 +11,50 @@
         android:text="@string/join_title"
    		android:tag="@string/bold"
         />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/join_name_label"
-        android:tag="@string/bold"
-        />
     
+    <!-- 아이디 -->
+    <TextView
+        style="@style/label"
+        android:text="@string/join_name_label" />
+
     <EditText
+        android:id="@+id/user_id"
+        style="@style/input"
+        android:hint="@string/hint_name" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_name"
-        />  
+        android:layout_height="2px"
+        android:background="#e5e5e5" />
+        
     
     <!-- 비밀번호 -->
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/join_pwd_label"
-        android:tag="@string/bold"
-        />
-    
+        style="@style/label"
+         android:text="@string/join_pwd_label" />
+
     <EditText
+        android:id="@+id/user_pwd"
+        style="@style/input"
+        android:hint="@string/hint_pwd" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_pwd"
-        />  
-    
-    
+        android:layout_height="2px"
+        android:background="#e5e5e5" />
+        
     
     <!-- 로그인 -->
     <Button
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_btn"
-         android:tag="@string/bold"
+        android:tag="@string/bold"
+        android:id="@+id/login_btn"
         />    
 
 </LinearLayout>

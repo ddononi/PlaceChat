@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -201,7 +202,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 		pwdEt = (EditText)findViewById(R.id.join_pwd);
 		rePwdEt = (EditText)findViewById(R.id.join_re_pwd);
 		AvataIv = (ImageView)findViewById(R.id.avata_image);
-		Button joinBtn = (Button)findViewById(R.id.pic_reg_btn);
+		ImageButton joinBtn = (ImageButton)findViewById(R.id.pic_reg_btn);
 		Button regBtn = (Button)findViewById(R.id.register_btn);
 		// 이벤트 설정
 		joinBtn.setOnClickListener(this);
@@ -354,10 +355,10 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 			// 파일 전송 결과를 출력
 			if (result) { // 파일 전송이 정상이면
 				Intent intent = new Intent(JoinActivity.this,
-						SearchFriendActivity.class);
+						LoginActivity.class);
 				// 다음 엑티비티에 유저 정보를 넘겨준다.
 				intent.putExtra("user_name", nameEt.getText().toString());
-				intent.putExtra("user_image_uri", imageUri);
+				intent.putExtra("user_pwd", pwdEt.getText().toString());
 				startActivity(intent);
 				finish();
 
@@ -391,7 +392,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 		protected Boolean doInBackground(final String... params) {	// 전송중
 
 			// TODO Auto-generated method stub
-			boolean result = true;
+			boolean result = false;
 
 			if (!checkNetWork(true)) { // 네트워크 상태 체크
 				return false;
@@ -415,7 +416,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 				// 파일 업로드
 				if (!mFtp.upload(params[2],receiveFiles)) {
 					// 업로드 에러시
-					result = false;
+					return false;
 				} else {
 					 vars.add(new BasicNameValuePair("user_image", imageFile));	// 파일이름
 				}
@@ -434,23 +435,34 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 	            try {
 	                ResponseHandler<String> responseHandler = new BasicResponseHandler();
 	                HttpClient client = new DefaultHttpClient();
-	                String responseBody = client.execute(request, responseHandler);	// 전송
+	                final String responseBody = client.execute(request, responseHandler);	// 전송
             		 SLog.i(responseBody);
-	                if (responseBody.equals("ok")) {
+	                if (responseBody.trim().equals("ok")) {
 	    				  SLog.i(responseBody);
 	    				  result = true;
+	                }else if (responseBody.trim().equals("fail")) {
+	                	JoinActivity.this.runOnUiThread(new Runnable() {
+							public void run() {
+								// TODO Auto-generated method stub
+								Toast.makeText(JoinActivity.this, "단말기 정보가 있습니다.", Toast.LENGTH_SHORT).show();
+							}
+						});
+	                }else{
+	                	JoinActivity.this.runOnUiThread(new Runnable() {
+							public void run() {
+								// TODO Auto-generated method stub
+								Toast.makeText(JoinActivity.this, responseBody, Toast.LENGTH_SHORT).show();
+							}
+						});
 	                }
 	            } catch (ClientProtocolException e) {
 	            	SLog.e("Failed to get playerId (protocol): ", e);
-	                result = false;
 	            } catch (IOException e) {
 	            	SLog.e("Failed to get playerId (io): ", e);
-	                result = false;
 	            }
 
 
 			} catch (Exception e) {
-				result = false;
 				dialog.dismiss(); // 프로그레스 다이얼로그 닫기
 				SLog.e( "파일 업로드 에러", e);
 			}
