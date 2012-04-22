@@ -51,13 +51,21 @@ import android.widget.Toast;
 
 /**
  * 회원 가입 엑티비티
- * 회원정보는 공유 설정환경에 저장한다.
+ * 회원정보는 공유 설정환경에 저장한후 
+ * 폼 검증후 저장내용을 서버에 보낸다.
+ * 서버에 전송 내역은 다음과 같다.
+ *	<ul>
+ *		<li>이름혹은 아이디</li>
+ *		<li>비밀번호</li>
+ *		<li>아바타이미지</li>
+ *		<li>수강명들</li>
  */
 public class JoinActivity extends BaseActivity implements OnClickListener {
 	// element
 	private EditText nameEt;
 	private EditText pwdEt;
 	private EditText rePwdEt;
+	private EditText lectureEt;
 	private ImageView AvataIv;
 	private SharedPreferences settings;
 
@@ -78,7 +86,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
     	        prefEditor.commit();
 
     	        // 완료되면 메인페이지로
-    	        Intent intent =  new Intent(JoinActivity.this, SearchFriendActivity.class);
+    	        Intent intent =  new Intent(JoinActivity.this, MapMainActivity.class);
     	        finish();
     			startActivity(intent);
     		}else{
@@ -201,6 +209,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 		nameEt = (EditText)findViewById(R.id.join_name);
 		pwdEt = (EditText)findViewById(R.id.join_pwd);
 		rePwdEt = (EditText)findViewById(R.id.join_re_pwd);
+		lectureEt  = (EditText)findViewById(R.id.join_lecture);
 		AvataIv = (ImageView)findViewById(R.id.avata_image);
 		ImageButton joinBtn = (ImageButton)findViewById(R.id.pic_reg_btn);
 		Button regBtn = (Button)findViewById(R.id.register_btn);
@@ -309,14 +318,15 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void registerUser() {
 		// TODO Auto-generated method stub
-		new AsyncTaskUserInfoUpload().execute(nameEt.getText().toString(), pwdEt.getText().toString(), selectedFile);
+		new AsyncTaskUserInfoUpload().execute(nameEt.getText().toString(), 
+				pwdEt.getText().toString(), lectureEt.getText().toString(), selectedFile);
 	}
 
 	/*
 	 * ftp 연결 설정
 	 */
 	private boolean connectFTP() {
-		mFtp = new MyFTPClient(SERVER_IP, SERVER_FTP_PORT, FTP_NAME,
+		mFtp = new MyFTPClient(SERVER_URL, SERVER_FTP_PORT, FTP_NAME,
 				FTP_PASSWORD);
 		if (!mFtp.connect()) {
 		//	Toast.makeText(PictureActivity.this,
@@ -344,6 +354,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 	private class AsyncTaskUserInfoUpload extends
 			AsyncTask<String, String, Boolean> {
 		ProgressDialog dialog = null;
+		private String receiveFiles;
 
 		@Override
 		protected void onPostExecute(final Boolean result) {	// 전송 완료후
@@ -354,6 +365,17 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 			}
 			// 파일 전송 결과를 출력
 			if (result) { // 파일 전송이 정상이면
+				
+
+				// 공유환경에 가입 여부를 저장
+				// 강의 저장, 아바타 이미지 저장처리
+		        SharedPreferences settings = getSharedPreferences(PREFER, MODE_PRIVATE);
+		        SharedPreferences.Editor editor = settings.edit();
+		        editor.putBoolean("joined", true);
+		        editor.putString("lecture", lectureEt.getText().toString());
+		        editor.putString("avataImg",  receiveFiles); 
+		        editor.commit();
+		        
 				Intent intent = new Intent(JoinActivity.this,
 						LoginActivity.class);
 				// 다음 엑티비티에 유저 정보를 넘겨준다.
@@ -409,27 +431,29 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 					.setDeviceInfo((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));	// 디바이스 정보 얻어괴
 			try {
 				/* 파일 업로드 */
-				String imageFile = params[2].substring(params[2].lastIndexOf("/") + 1); // 실제 파일명만	 가졍옴
+				String imageFile = params[3].substring(params[3].lastIndexOf("/") + 1); // 실제 파일명만	 가졍옴
 				// 서버에 이미지 중복 방지를 위해 이름 바꾸기 yyyymmdd_hhmmss_Cellnum_01.xxx
 				String receiveFiles = getDateTime() + "_" + di.getDeviceNumber() +  getExtension(imageFile, ".");
 
 				// 파일 업로드
-				if (!mFtp.upload(params[2],receiveFiles)) {
+				if (!mFtp.upload(params[3], receiveFiles)) {
 					// 업로드 에러시
 					return false;
 				} else {
 					 vars.add(new BasicNameValuePair("user_image", imageFile));	// 파일이름
+					 this.receiveFiles = receiveFiles;
 				}
 				// HTTP post 메서드를 이용하여 데이터 업로드 처리
 	            vars.add(new BasicNameValuePair("user_name", params[0]));			// 이름
 	            vars.add(new BasicNameValuePair("user_pwd", params[1]));			// 비밀번호
 	            vars.add(new BasicNameValuePair("avata_img", receiveFiles));		// 이미지명
+	            vars.add(new BasicNameValuePair("lecture", params[2]));			// 수강명들
 	            vars.add(new BasicNameValuePair("device_id", di.getMyDeviceID()));	// 전화번호
-	            String url = "http://" + SERVER_IP + UPLOAD_URL;// + "?" + URLEncodedUtils.format(vars, null);
+	            String url = "http://" + SERVER_URL + UPLOAD_URL;// + "?" + URLEncodedUtils.format(vars, null);
 	            HttpPost request = new HttpPost(url);
 	         // 한글깨짐을 방지하기 위해 utf-8 로 인코딩시키자
 				UrlEncodedFormEntity entity = null;
-				entity = new UrlEncodedFormEntity(vars, HTTP.UTF_8);	//utf-8 인코딩
+				entity = new UrlEncodedFormEntity(vars, "UTF-8");
 				request.setEntity(entity);
 
 	            try {
@@ -437,10 +461,10 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 	                HttpClient client = new DefaultHttpClient();
 	                final String responseBody = client.execute(request, responseHandler);	// 전송
             		 SLog.i(responseBody);
-	                if (responseBody.trim().equals("ok")) {
+	                if (responseBody.trim().contains("ok")) {
 	    				  SLog.i(responseBody);
 	    				  result = true;
-	                }else if (responseBody.trim().equals("fail")) {
+	                }else if (responseBody.contains("fail")) {
 	                	JoinActivity.this.runOnUiThread(new Runnable() {
 							public void run() {
 								// TODO Auto-generated method stub
@@ -451,7 +475,7 @@ public class JoinActivity extends BaseActivity implements OnClickListener {
 	                	JoinActivity.this.runOnUiThread(new Runnable() {
 							public void run() {
 								// TODO Auto-generated method stub
-								Toast.makeText(JoinActivity.this, responseBody, Toast.LENGTH_SHORT).show();
+								Toast.makeText(JoinActivity.this, "zz" +  responseBody.length(), Toast.LENGTH_SHORT).show();
 							}
 						});
 	                }

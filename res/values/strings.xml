@@ -11,10 +11,12 @@
     <string name="join_name_label">이름 : </string>
     <string name="join_pwd_label">비밀번호 : </string>
     <string name="join_re_pwd_label">비밀번호 확인 : </string>
+    <string name="join_lecture_label">수강명 : </string>
     <string name="join_pic_label">사진등록 </string>
     <string name="hint_name">이름을 입력하세요 ..</string>
     <string name="hint_pwd">비밀번호를 입력하세요.. </string>
     <string name="hint_re_pwd">비밀번호확인을 입력하세요</string>
+    <string name="hint_lecture">콤마(,)로 수강명 구분</string>
     <string name="register_btn">가입하기</string>
     
     <!-- 로그인 -->

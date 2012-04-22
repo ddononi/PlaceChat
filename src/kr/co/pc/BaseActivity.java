@@ -27,6 +27,14 @@ public class BaseActivity extends Activity implements iChatConstant {
 	public static Typeface typeFace = null;
 	public static Typeface typeFaceBold = null;
 	public final static Calendar calendar = Calendar.getInstance();
+	
+	// 내 정보 전역 변수
+	public static int myIndex;
+	public static String myImageFile;
+	public static String lecture;
+	
+	//public static String ;
+	
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

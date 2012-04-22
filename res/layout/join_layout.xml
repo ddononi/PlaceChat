@@ -11,9 +11,7 @@
         android:text="@string/join_title"
    		android:tag="@string/bold"
         />
-    
-    
-        
+  
    	<RelativeLayout
    	    android:layout_width="match_parent"
    	    android:layout_height="match_parent"
@@ -86,6 +84,25 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="#e5e5e5" />
+    
+    
+    
+     <!-- 수강명들 -->
+    <TextView
+        style="@style/label"
+        android:text="@string/join_lecture_label"
+        android:tag="@string/bold"/>
+
+    <EditText
+        style="@style/input"
+        android:hint="@string/hint_lecture"
+        android:inputType="text"
+   		android:id="@+id/join_lecture"  />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#e5e5e5" />    
     
     
     <!-- 등록 -->

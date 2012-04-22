@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
 		btn.setOnClickListener(new OnClickListener() {
 			public void onClick(final View v) {
 				// TODO Auto-generated method stub
-				atl.cancel(false);
+				//atl.cancel(false);
 				// 로그인 정보를 서버에 전송
 				atl.execute(nameEt.getText().toString(), pwdEt.getText().toString() );
 			}
@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity {
 			dialog.dismiss(); // 프로그레스 다이얼로그 닫기
 			// 파일 전송 결과를 출력
 			if (result) { // 파일 전송이 정상이면
-				Intent intent = new Intent(LoginActivity.this, SearchFriendActivity.class);
+				Intent intent = new Intent(LoginActivity.this, MapMainActivity.class);
 				// 다음 엑티비티에 유저 정보를 넘겨준다.
 				startActivity(intent);
 				finish();
@@ -132,12 +132,10 @@ public class LoginActivity extends BaseActivity {
 		protected Boolean doInBackground(final String... params) {	// 전송중
 
 			// TODO Auto-generated method stub
-			boolean result = true;
-
+			boolean result = false;
 			if (!checkNetWork(true)) { // 네트워크 상태 체크
 				return false;
 			}
-
 			// http 로 보낼 이름 값 쌍 컬랙션
 			Vector<NameValuePair> vars = new Vector<NameValuePair>();
 			DeviceInfo di = DeviceInfo
@@ -148,32 +146,39 @@ public class LoginActivity extends BaseActivity {
 	            vars.add(new BasicNameValuePair("user_name", params[0]));			// 이름
 	            vars.add(new BasicNameValuePair("user_pwd", params[1]));			// 비밀번호
 	            vars.add(new BasicNameValuePair("device_id", di.getMyDeviceID()));	// 전화번호
-	            String url = "http://" + SERVER_IP + LOGIN_URL;// + "?" + URLEncodedUtils.format(vars, null);
+	            String url = "http://" + SERVER_URL + LOGIN_URL;// + "?" + URLEncodedUtils.format(vars, null);
 	            HttpPost request = new HttpPost(url);
-	            // 한글깨짐을 방지하기 위해 utf-8 로 인코딩시키자
 				UrlEncodedFormEntity entity = null;
-				entity = new UrlEncodedFormEntity(vars, HTTP.UTF_8);	//utf-8 인코딩
+				entity = new UrlEncodedFormEntity(vars, "UTF-8");
 				request.setEntity(entity);
-	            try {
-	                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-	                HttpClient client = new DefaultHttpClient();
-	                String responseBody = client.execute(request, responseHandler);	// 전송
-            		 SLog.i(responseBody);
-	                if (responseBody.equals("ok")) {
-	    				  SLog.i(responseBody);
-	    				  result = true;
-	                }
-	            } catch (ClientProtocolException e) {
-	            	SLog.e("Failed to get playerId (protocol): ", e);
-	                result = false;
-	            } catch (IOException e) {
-	            	SLog.e("Failed to get playerId (io): ", e);
-	                result = false;
-	            }
-
-
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                HttpClient client = new DefaultHttpClient();
+                final String responseBody = client.execute(request, responseHandler);	// 전송
+        		 SLog.i(responseBody);
+        		 String[] arr =responseBody.trim().split(",");
+                if (responseBody.contains("ok")  ) {	// 정상이면 내 인덱스 번호 추출
+   				  myIndex = Integer.valueOf(arr[2]);
+   				  result = true;
+                }else if (arr[1].contains("fail")) {
+                	LoginActivity.this.runOnUiThread(new Runnable() {
+						public void run() {
+							// TODO Auto-generated method stub
+							Toast.makeText(LoginActivity.this, "단말기 정보가 있습니다.", Toast.LENGTH_SHORT).show();
+						}
+					});
+                }else{
+                	LoginActivity.this.runOnUiThread(new Runnable() {
+						public void run() {
+							// TODO Auto-generated method stub
+							Toast.makeText(LoginActivity.this, "zz" +  responseBody.length(), Toast.LENGTH_SHORT).show();
+						}
+					});
+                }
+            } catch (ClientProtocolException e) {
+            	SLog.e("Failed to get playerId (protocol): ", e);
+            } catch (IOException e) {
+            	SLog.e("Failed to get playerId (io): ", e);
 			} catch (Exception e) {
-				result = false;
 				dialog.dismiss(); // 프로그레스 다이얼로그 닫기
 				SLog.e( "파일 업로드 에러", e);
 			}

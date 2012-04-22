@@ -17,29 +17,40 @@ public final class R {
         public static final int add_photo=0x7f020000;
         public static final int addphoto_n=0x7f020001;
         public static final int addphoto_p=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int input_n=0x7f020004;
-        public static final int input_p=0x7f020005;
-        public static final int input_s=0x7f020006;
-        public static final int txt_input=0x7f020007;
+        public static final int default_img=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int input_n=0x7f020005;
+        public static final int input_p=0x7f020006;
+        public static final int input_s=0x7f020007;
+        public static final int txt_input=0x7f020008;
     }
     public static final class id {
-        public static final int avata_image=0x7f070000;
-        public static final int join_name=0x7f070002;
-        public static final int join_pwd=0x7f070003;
-        public static final int join_re_pwd=0x7f070004;
-        public static final int login_btn=0x7f070008;
-        public static final int map_root=0x7f070009;
-        public static final int pic_reg_btn=0x7f070001;
-        public static final int register_btn=0x7f070005;
-        public static final int user_id=0x7f070006;
-        public static final int user_pwd=0x7f070007;
+        public static final int avata=0x7f070004;
+        public static final int avata_image=0x7f070007;
+        public static final int dialog_root=0x7f070003;
+        public static final int join_lecture=0x7f07000c;
+        public static final int join_name=0x7f070009;
+        public static final int join_pwd=0x7f07000a;
+        public static final int join_re_pwd=0x7f07000b;
+        public static final int login_btn=0x7f070010;
+        public static final int map_root=0x7f070011;
+        public static final int message_box=0x7f070001;
+        public static final int message_timeline=0x7f070000;
+        public static final int pic_reg_btn=0x7f070008;
+        public static final int register_btn=0x7f07000d;
+        public static final int send_button=0x7f070002;
+        public static final int user_id=0x7f07000e;
+        public static final int user_lecture=0x7f070006;
+        public static final int user_name=0x7f070005;
+        public static final int user_pwd=0x7f07000f;
     }
     public static final class layout {
-        public static final int join_layout=0x7f030000;
-        public static final int login_layout=0x7f030001;
-        public static final int map_layout=0x7f030002;
-        public static final int start_layout=0x7f030003;
+        public static final int chat_layout=0x7f030000;
+        public static final int dialog=0x7f030001;
+        public static final int join_layout=0x7f030002;
+        public static final int login_layout=0x7f030003;
+        public static final int map_layout=0x7f030004;
+        public static final int start_layout=0x7f030005;
     }
     public static final class string {
         public static final int app_name=0x7f050001;
@@ -47,21 +58,23 @@ public final class R {
          */
         public static final int bold=0x7f050002;
         public static final int hello=0x7f050000;
-        public static final int hint_name=0x7f050008;
-        public static final int hint_pwd=0x7f050009;
-        public static final int hint_re_pwd=0x7f05000a;
+        public static final int hint_lecture=0x7f05000c;
+        public static final int hint_name=0x7f050009;
+        public static final int hint_pwd=0x7f05000a;
+        public static final int hint_re_pwd=0x7f05000b;
+        public static final int join_lecture_label=0x7f050007;
         public static final int join_name_label=0x7f050004;
-        public static final int join_pic_label=0x7f050007;
+        public static final int join_pic_label=0x7f050008;
         public static final int join_pwd_label=0x7f050005;
         public static final int join_re_pwd_label=0x7f050006;
         /**  회원 등록 
          */
         public static final int join_title=0x7f050003;
-        public static final int login_btn=0x7f05000d;
+        public static final int login_btn=0x7f05000f;
         /**  로그인 
          */
-        public static final int login_title=0x7f05000c;
-        public static final int register_btn=0x7f05000b;
+        public static final int login_title=0x7f05000e;
+        public static final int register_btn=0x7f05000d;
     }
     public static final class style {
         /**   input 
